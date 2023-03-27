@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Profiles </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="profiles.length == 0">
+    <ion-card-header>
+      <ion-card-title>No records found</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  <ion-card *ngFor="let profile of profiles">
+    <img
+      width="150"
+      height=""
+      [src]="profile.profilePhoto"
+      *ngIf="profile.profilePhoto"
+    />
+    <ion-card-header>
+      <ion-card-title
+        >{{ profile.firstName }} {{ profile.lastName }}</ion-card-title
+      >
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>Date of Birth:</strong> {{ profile.dateOfBirth }}</p>
+      <p>
+        <strong>Address:</strong> {{ profile.address.street }}, {{
+        profile.address.city }}, {{ profile.address.state }}
+      </p>
+      <p><strong>Job Title:</strong> {{ profile.jobTitle }}</p>
+      <p><strong>Phone Number:</strong> {{ profile.phoneNumber }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
