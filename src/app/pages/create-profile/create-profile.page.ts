@@ -1,6 +1,6 @@
 import { ProfilesService } from './../../services/profiles.service';
 import { Profile } from './../../models/profile';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -11,6 +11,7 @@ import { AlertController } from '@ionic/angular';
 export class CreateProfilePage implements OnInit {
 
   public profile: Profile = new Profile("", "", "", "", "", "", "", "", "");
+  @ViewChild('fileInput', { static: false }) fileInput: ElementRef | undefined;
 
   constructor(private alertController: AlertController, private profileService: ProfilesService) { }
 
@@ -33,21 +34,21 @@ export class CreateProfilePage implements OnInit {
     };
 
     this.profileService.addProfile(newProfile);
-    this.profile = new Profile("", "", "", "", "", "", "", "", "");
+    this.resetForm();
     this.presentAlert();
   }
 
-  
+
   async fileToBase64(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-  
+
       reader.onload = () => {
         const base64String = reader.result as string;
         resolve(base64String);
       };
-  
+
       reader.onerror = (error) => {
         reject(error);
       };
@@ -62,7 +63,7 @@ export class CreateProfilePage implements OnInit {
         this.profile.profilePhoto = await this.fileToBase64(file.files[0]);
       }
     }
-  }  
+  }
 
   async presentAlert() {
     const alert = await this.alertController.create({
@@ -74,6 +75,11 @@ export class CreateProfilePage implements OnInit {
     await alert.present();
   }
 
- 
+  resetForm() {
+    this.profile = new Profile("", "", "", "", "", "", "", "", "");
+
+    if (this.fileInput)
+      this.fileInput.nativeElement.value = '';
+  }
 
 }

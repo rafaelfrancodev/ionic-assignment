@@ -5,43 +5,44 @@
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="submitForm()">
+  <form (ngSubmit)="submitForm()" #form="ngForm">
     <ion-item>
       <ion-label>First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.firstName" name="firstName"></ion-input>
+      <ion-input type="text" [(ngModel)]="profile.firstName" name="firstName" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.lastName" name="lastName"></ion-input>
+      <ion-input type="text" [(ngModel)]="profile.lastName" name="lastName" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Date of Birth</ion-label>
-      <ion-datetime display-format="MMM DD, YYYY" [(ngModel)]="profile.dateOfBirth" name="dateOfBirth"></ion-datetime>
+      <span slot="title">Select a date of birth</span>
+      <ion-datetime presentation="date" display-format="YYYY-MM-DD" [(ngModel)]="profile.dateOfBirth" name="dateOfBirth" required></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>Street</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.address.street" name="street"></ion-input>
+      <ion-input type="text" [(ngModel)]="profile.address.street" name="street" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>City</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.address.city" name="city"></ion-input>
+      <ion-input type="text" [(ngModel)]="profile.address.city" name="city" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>State</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.address.state" name="state"></ion-input>
+      <ion-input type="text" [(ngModel)]="profile.address.state" name="state" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Job Title</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.jobTitle" name="jobTitle"></ion-input>
+      <ion-input type="text" [(ngModel)]="profile.jobTitle" name="jobTitle" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Phone Number</ion-label>
-      <ion-input type="tel" [(ngModel)]="profile.phoneNumber" name="phoneNumber"></ion-input>
+      <ion-input type="tel" [(ngModel)]="profile.phoneNumber" name="phoneNumber"  required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Profile Photo</ion-label>
-      <input type="file" (change)="handleFileInput($event)">
+      <input type="file" accept="image/png, image/gif, image/jpeg" (change)="handleFileInput($event)" required>
     </ion-item>
-    <ion-button type="submit" expand="block">Create Profile</ion-button>
+    <ion-button color="dark" type="submit" expand="block" [disabled]="!form.valid">Create Profile</ion-button>
   </form>
 </ion-content>
